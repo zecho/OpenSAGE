@@ -14,8 +14,7 @@ layout(set = MESH_MATERIAL_RESOURCE_SET, binding = 0) uniform MaterialConstants
     float BumpScale;
     float SpecularExponent;
     bool AlphaTestEnable;
-
-    float _Padding;
+    bool DepthWriteEnable;
 
     vec4 AmbientColor;
     vec4 DiffuseColor;

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using OpenSage.Content.Translation;
@@ -301,6 +302,20 @@ namespace OpenSage.Content
                 // TODO
                 return null;
             }
+        }
+
+        public string GetW3dFilePath(string file)
+        {
+            string subPath = file + ".W3D";
+
+            // For newer SAGE games the model files are split into subfolders.
+            // E.g. "Art\\W3D\\MU\MUCavtroll_skn.w3d"
+            if (SageGame >= SageGame.Bfme)
+            {
+                subPath = subPath.Substring(0, 2) + "\\" + subPath;
+            }
+
+            return Path.Combine("Art", "W3D", subPath);
         }
 
         public Font GetOrCreateFont(string fontName, float fontSize, FontWeight fontWeight)

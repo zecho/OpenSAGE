@@ -28,7 +28,10 @@ namespace OpenSage.Graphics.Shaders
                     "MaterialConstants",
                     32,
                     new ResourceTypeMember("ColorEmissive", ResourceType.Vec4, 0),
-                    new ResourceTypeMember("TexCoordTransform_0", ResourceType.Vec4, 16)));
+                    new ResourceTypeMember("TexCoordTransform_0", ResourceType.Vec4, 16),
+                    new ResourceTypeMember("AlphaBlendingEnable", ResourceType.Int, 20),
+                    new ResourceTypeMember("DepthWriteEnable", ResourceType.Int, 24),
+                    new ResourceTypeMember("FogEnable", ResourceType.Int, 28)));
 
             yield return new ResourceBinding(
                 1,

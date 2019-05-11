@@ -13,6 +13,9 @@ layout(set = MESH_MATERIAL_RESOURCE_SET, binding = 0) uniform MaterialConstants
 {
     vec4 ColorEmissive;
     vec4 TexCoordTransform_0;
+    bool AlphaBlendingEnable;
+    bool DepthWriteEnable;
+    bool FogEnable;
 } _MaterialConstants;
 
 layout(set = MESH_MATERIAL_RESOURCE_SET, binding = 1) uniform texture2D Texture_0;

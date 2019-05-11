@@ -31,8 +31,8 @@ namespace OpenSage.Content
             if (w3dHLod != null && w3dHierarchy == null)
             {
                 // Load referenced hierarchy.
-                var hierarchyFileName = w3dHLod.Header.HierarchyName + ".W3D";
-                var hierarchyFilePath = Path.Combine(Path.GetDirectoryName(w3dFile.FilePath), hierarchyFileName);
+                var hierarchyFileName = w3dHLod.Header.HierarchyName;
+                var hierarchyFilePath = contentManager.GetW3dFilePath(hierarchyFileName);
                 var hierarchyFileEntry = contentManager.FileSystem.GetFile(hierarchyFilePath);
                 W3dFile hierarchyFile;
                 using (var entryStream = hierarchyFileEntry.Open())
@@ -195,10 +195,15 @@ namespace OpenSage.Content
 
             var vertexMaterials = CreateMaterials(w3dMesh);
 
-            var shadingConfigurations = new FixedFunctionShaderResources.ShadingConfiguration[w3dMesh.Shaders.Items.Count];
-            for (var i = 0; i < shadingConfigurations.Length; i++)
+            FixedFunctionShaderResources.ShadingConfiguration[] shadingConfigurations = null;
+
+            if (w3dMesh.Shaders != null)
             {
-                shadingConfigurations[i] = CreateShadingConfiguration(w3dMesh.Shaders.Items[i]);
+                shadingConfigurations = new FixedFunctionShaderResources.ShadingConfiguration[w3dMesh.Shaders.Items.Count];
+                for (var i = 0; i < shadingConfigurations.Length; i++)
+                {
+                    shadingConfigurations[i] = CreateShadingConfiguration(w3dMesh.Shaders.Items[i]);
+                }
             }
 
             var meshParts = new List<ModelMeshPart>();
@@ -264,6 +269,9 @@ namespace OpenSage.Content
 
         private static FixedFunctionShaderResources.VertexMaterial[] CreateMaterials(W3dMesh w3dMesh)
         {
+            if (w3dMesh.VertexMaterials == null)
+                return null;
+
             var vertexMaterials = new FixedFunctionShaderResources.VertexMaterial[w3dMesh.VertexMaterials.Items.Count];
 
             for (var i = 0; i < w3dMesh.VertexMaterials.Items.Count; i++)
@@ -448,7 +456,7 @@ namespace OpenSage.Content
                 }
             }
 
-            var materialResourceSet = materialResourceSetBuilder.CreateResourceSet();
+            var materialResourceSet = materialResourceSetBuilder.CreateResourceSet(contentManager.NullTexture);
 
             var texCoordsVertexBuffer = AddDisposable(contentManager.GraphicsDevice.CreateStaticBuffer(
                 texCoords,
@@ -518,7 +526,7 @@ namespace OpenSage.Content
                 meshParts.Add(CreateModelMeshPart(
                     contentManager,
                     texCoordsVertexBuffer,
-                    0, 
+                    0,
                     w3dMesh.Header.NumTris * 3,
                     w3dMesh,
                     vertexMaterials,
@@ -696,7 +704,7 @@ namespace OpenSage.Content
                     TextureIndex1);
             }
 
-            public static bool operator==(CombinedMaterialPermutation l, CombinedMaterialPermutation r)
+            public static bool operator ==(CombinedMaterialPermutation l, CombinedMaterialPermutation r)
             {
                 return l.VertexMaterialID == r.VertexMaterialID
                     && l.ShaderID == r.ShaderID
@@ -750,7 +758,7 @@ namespace OpenSage.Content
                 {
                     Material = vertexMaterials[vertexMaterialID],
                     Shading = shadingConfigurations[shaderID],
-                    NumTextureStages = (int)numTextureStages
+                    NumTextureStages = (int) numTextureStages
                 },
                 BufferUsage.UniformBuffer));
 

@@ -30,7 +30,7 @@ namespace OpenSage.Graphics.Shaders
                     new ResourceTypeMember("BumpScale", ResourceType.Float, 0),
                     new ResourceTypeMember("SpecularExponent", ResourceType.Float, 4),
                     new ResourceTypeMember("AlphaTestEnable", ResourceType.Int, 8),
-                    new ResourceTypeMember("_Padding", ResourceType.Float, 12),
+                    new ResourceTypeMember("DepthWriteEnable", ResourceType.Int, 12),
                     new ResourceTypeMember("AmbientColor", ResourceType.Vec4, 16),
                     new ResourceTypeMember("DiffuseColor", ResourceType.Vec4, 32),
                     new ResourceTypeMember("SpecularColor", ResourceType.Vec4, 48)));
@@ -41,7 +41,7 @@ namespace OpenSage.Graphics.Shaders
                 ResourceType.Texture2D);
 
             yield return new ResourceBinding(
-                1,
+                2,
                 new ResourceLayoutElementDescription("NormalMap", ResourceKind.TextureReadOnly, ShaderStages.Fragment),
                 ResourceType.Texture2D);
         }

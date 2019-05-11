@@ -27,6 +27,8 @@ namespace OpenSage.Logic.Object
 
         private W3dModelDrawConditionState _activeModelDrawConditionState;
 
+        private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
+
         public override IEnumerable<BitArray<ModelConditionFlag>> ModelConditionStates
         {
             get
@@ -136,11 +138,15 @@ namespace OpenSage.Logic.Object
             }
             else if (!string.Equals(conditionState.Model, "NONE", StringComparison.OrdinalIgnoreCase))
             {
-                var w3dFilePath = Path.Combine("Art", "W3D", conditionState.Model + ".W3D");
+                var w3dFilePath = _contentManager.GetW3dFilePath(conditionState.Model);
                 var model = _contentManager.Load<Model>(w3dFilePath);
                 if (model != null)
                 {
                     modelInstance = model.CreateInstance(_contentManager);
+                }
+                else
+                {
+                    logger.Warn("Failed to load model: " + w3dFilePath);
                 }
             }
 
