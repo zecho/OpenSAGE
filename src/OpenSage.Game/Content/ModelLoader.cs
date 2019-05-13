@@ -456,7 +456,7 @@ namespace OpenSage.Content
                 }
             }
 
-            var materialResourceSet = materialResourceSetBuilder.CreateResourceSet(contentManager.NullTexture);
+            var materialResourceSet = materialResourceSetBuilder.CreateResourceSet();
 
             var texCoordsVertexBuffer = AddDisposable(contentManager.GraphicsDevice.CreateStaticBuffer(
                 texCoords,
