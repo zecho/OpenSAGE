@@ -4,7 +4,6 @@ using System.IO;
 using System.Linq;
 using System.Numerics;
 using OpenSage.Data.Ini;
-using OpenSage.Data.Utilities.Extensions;
 using OpenSage.FileFormats;
 using OpenSage.Mathematics;
 
@@ -45,9 +44,11 @@ namespace OpenSage.Data.Map
                     lightingConfigurations[TimeOfDayValues[i]] = GlobalLightingConfiguration.Parse(reader, version);
                 }
 
+                // Overbright does apply to this in some way.
+                // A is the shadowIntesity, with 0.5 being 255
                 var shadowColor = MapColorArgb.Parse(reader);
 
-                // TODO: BFME. Overbright? Bloom?
+                // TODO: BFME. Bloom?
                 byte[] unknown = null;
                 if (version >= 7 && version < 11)
                 {

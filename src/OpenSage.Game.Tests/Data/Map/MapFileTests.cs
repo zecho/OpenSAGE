@@ -724,6 +724,16 @@ namespace OpenSage.Tests.Data.Map
             Assert.Equal(6, mapFile.BuildLists.Items[1].Items.Length);
         }
 
+        [Fact]
+        public void Overbright()
+        {
+            var noOverbright = GetMapFile("NoOverbright");
+            Assert.Equal(new MapColorArgb(63, 128, 0, 0), noOverbright.GlobalLighting.ShadowColor);
+
+            var overbright = GetMapFile("Overbright");
+            Assert.Equal(new MapColorArgb(64, 0, 0, 0), overbright.GlobalLighting.ShadowColor);
+        }
+
         private static MapFile GetMapFile([CallerMemberName] string testName = null)
         {
             var fileName = Path.Combine("Data", "Map", "Assets", testName + ".map");
