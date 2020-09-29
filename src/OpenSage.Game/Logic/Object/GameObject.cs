@@ -602,8 +602,9 @@ namespace OpenSage.Logic.Object
                 return;
             }
 
-            // Update all draw modules
             UpdateDrawModuleConditionStates();
+
+            // Update all draw modules
             foreach (var drawModule in _drawModules)
             {
                 drawModule.Update(gameTime);
@@ -667,7 +668,7 @@ namespace OpenSage.Logic.Object
         public void OnLocalSelect(AudioSystem gameAudio)
         {
             var audioEvent = Definition.VoiceSelect?.Value;
-            if (audioEvent != null)
+            if (audioEvent != null && ParentHorde == null)
             {
                 gameAudio.PlayAudioEvent(this, audioEvent);
             }
@@ -677,7 +678,7 @@ namespace OpenSage.Logic.Object
         public void OnLocalMove(AudioSystem gameAudio)
         {
             var audioEvent = Definition.VoiceMove?.Value;
-            if (audioEvent != null)
+            if (audioEvent != null && ParentHorde == null)
             {
                 gameAudio.PlayAudioEvent(this, audioEvent);
             }
@@ -687,7 +688,7 @@ namespace OpenSage.Logic.Object
         public void OnLocalAttack(AudioSystem gameAudio)
         {
             var audioEvent = Definition.VoiceAttack?.Value;
-            if (audioEvent != null)
+            if (audioEvent != null && ParentHorde == null)
             {
                 gameAudio.PlayAudioEvent(this, audioEvent);
             }
