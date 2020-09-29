@@ -124,7 +124,7 @@ namespace OpenSage.Logic.Object
 
         public Vector3 GetFormationOffset(GameObject obj)
         {
-            var hordeYaw = _gameObject.Transform.EulerAngles.Z;
+            var hordeYaw = _gameObject.Transform.Yaw;
             foreach (var rank in _formation.Values)
             {
                 foreach (var position in rank)
