@@ -224,7 +224,7 @@ namespace OpenSage
                         // We'll skip processing them altogether.
                         if (mapObject.TypeName == "" || roadEnd.TypeName == "")
                         {
-                            Logger.Warn($"Road {mapObject.ToString()} has invalid start- or endpoint, skipping...");
+                            Logger.Warn($"Road {mapObject} has invalid start- or endpoint, skipping...");
                             continue;
                         }
 
@@ -429,7 +429,7 @@ namespace OpenSage
         {
             _orderGeneratorInputHandler?.Update();
 
-            for (int i = 0; i < GameObjects.Items.Count; i++)
+            for (var i = 0; i < GameObjects.Items.Count; i++)
             {
                 var gameObject = GameObjects.Items[i];
                 gameObject.LocalLogicTick(gameTime, tickT, Terrain?.HeightMap);
